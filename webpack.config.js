@@ -1,11 +1,15 @@
-var debug = process.env.NODE_ENV !== "production";
+var debug = process.env.NODE_ENV !== 'production';
 var webpack = require('webpack');
 var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
-  context: path.join(__dirname, "src"),
-  devtool: debug ? "inline-sourcemap" : null,
-  entry: "./js/client.js",
+  devtool: 'source-map',
+  entry: {
+    app: path.join(__dirname, 'src/js/app.js'),
+    vendor: path.join(__dirname, 'src/js/vendor.js')
+  },
   module: {
     loaders: [
       {
@@ -16,16 +20,40 @@ module.exports = {
           presets: ['react', 'es2015', 'stage-0'],
           plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
         }
-      }
+      },
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract( 'style', 'css?sourceMap!postcss' )
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract( 'style', "css?sourceMap!postcss!sass?sourceMap" )
+      },
+      {
+        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "url?limit=10000&name=fonts/[name].[ext]"
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+        loader: 'file?name=fonts/[name].[ext]'
+      },
     ]
   },
+  postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
   output: {
-    path: __dirname + "/src/",
-    filename: "client.min.js"
+    path: path.join(__dirname, 'public'),
+    filename: '[name].bundle.js'
   },
-  plugins: debug ? [] : [
+  plugins: [
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-  ],
+    new webpack.optimize.UglifyJsPlugin({ mangle: false, compress: { warnings: false }}),
+    new webpack.ProvidePlugin({
+        jQuery: 'jquery',
+        $: 'jquery',
+        jquery: 'jquery',
+        'Tether': 'tether',
+        'window.Tether': 'tether'
+    }),
+    new ExtractTextPlugin('[name].css'),
+  ]
 };

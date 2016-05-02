@@ -9,9 +9,15 @@ export default class Nav extends React.Component {
       textAlign: "center",
       margin: "auto"
     };
+
+    const logoStyle = {
+      display: "inline-block",
+      marginRight: "10px"
+    };
+
     return (
       <nav class="navbar navbar-fixed-top navbar-light bg-faded">
-        <IndexLink to="/" class="navbar-brand" style={brandStyle}>ReactAct</IndexLink>
+        <IndexLink to="/" class="navbar-brand" style={brandStyle}><img src="/public/images/logo.svg" width="30" height="30" style={logoStyle}/><span class="main-color">ReactAct</span></IndexLink>
       </nav>
     );
   }
