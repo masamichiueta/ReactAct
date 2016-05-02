@@ -17,7 +17,7 @@ export default class Activity extends React.Component {
           <div class="card">
             <img class="card-img-top" style={imageStyle} src={imageUrl} alt="Card image cap" />
             <div class="card-block">
-               <p class="card-text sample"><{text}</p>
+               <p class="card-text sample">{text}</p>
             </div>
           </div>
         </a>
