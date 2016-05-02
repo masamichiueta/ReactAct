@@ -8,7 +8,7 @@ export default class Footer extends React.Component {
         <div class="container">
           <div class="row">
             <div class="center-block">
-              <p class="text-md-center">ReactAct © 2016 <a target="_blank" href="//uetamasamichi.com">Masamichi Ueta</a></p>
+              <p class="text-md-center">Copyright \u00a9 2016 <a target="_blank" href="//uetamasamichi.com">Masamichi Ueta</a></p>
             </div>
           </div>
         </div>
