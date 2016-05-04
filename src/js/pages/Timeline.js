@@ -43,7 +43,7 @@ export default class Timeline extends React.Component {
     const { activities } = this.state;
     const ActivityComponents = activities.map((activity, i) => {
       var inverted = i % 2 == 0 ? false : true;
-      return <Activity key={i} text={activity.text} imageUrl={activity.imageUrl} inverted={inverted} />
+      return <Activity key={i} text={activity.text} link={activity.link} imageUrl={activity.imageUrl} date={activity.date} inverted={inverted} />
     })
 
     return (
