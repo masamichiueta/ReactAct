@@ -1,10 +1,12 @@
+import "./Timeline.scss";
+
 import React from "react";
 
 import Activity from "../components/Activity";
 import * as ActivityActions from "../actions/ActivityActions";
 import ActivityStore from "../stores/ActivityStore.js";
 
-export default class Activities extends React.Component {
+export default class Timeline extends React.Component {
 
   constructor() {
     super();
@@ -40,13 +42,14 @@ export default class Activities extends React.Component {
   render() {
     const { activities } = this.state;
     const ActivityComponents = activities.map((activity, i) => {
-      return <Activity key={i} text={activity.text} imageUrl={activity.imageUrl} />
+      var inverted = i % 2 == 0 ? false : true;
+      return <Activity key={i} text={activity.text} imageUrl={activity.imageUrl} inverted={inverted} />
     })
 
     return (
-      <div class="row">
+      <ul class="timeline">
         {ActivityComponents}
-      </div>
+      </ul>
     );
   }
 
