@@ -1,27 +1,34 @@
 import "./Activity.scss";
 
 import React from "react";
+import { colors } from "../style.js";
 
 export default class Activity extends React.Component {
 
   render() {
-    const { text, imageUrl } = this.props;
+    const { text, imageUrl, inverted } = this.props;
     const imageStyle = {
       width: "100%",
       height: "auto"
     };
 
     return (
-      <div class="col-md-4">
+      <li class={inverted ? "timeline-inverted" : ""}>
+        <div class="timeline-badge">
+          <i class="fa fa-instagram" aria-hidden="true"></i>
+        </div>
         <a target="_blank" href={imageUrl}>
-          <div class="card">
-            <img class="card-img-top" style={imageStyle} src={imageUrl} alt="Card image cap" />
-            <div class="card-block">
-               <p class="card-text sample">{text}</p>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">{text}</h4>
+              <p><small class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> 11 hours ago via Instagram</small></p>
+            </div>
+            <div class="timeline-body">
+              <img src={imageUrl} style={imageStyle} alt="Card image cap" />
             </div>
           </div>
         </a>
-      </div>
+      </li>
     );
   }
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { IndexLink } from "react-router";
+import { colors } from "../../style.js";
 
 export default class Nav extends React.Component {
 
@@ -7,7 +8,8 @@ export default class Nav extends React.Component {
     const brandStyle = {
       width: "100%",
       textAlign: "center",
-      margin: "auto"
+      margin: "auto",
+      color: colors.mainColor,
     };
 
     const logoStyle = {
