@@ -1,9 +1,26 @@
 import dispatcher from "../dispatcher";
 
 export function loadActivities() {
-  dispatcher.dispatch({type: "RECEIVE_ACTIVITIES", activities: [
-    {text: "First activity", imageUrl: "https://scontent-nrt1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/12530881_1376847028997066_598205622_n.jpg"},
-    {text: "Second activity", imageUrl: "https://scontent-nrt1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/12328003_1723385431216699_1914869246_n.jpg"},
-    {text: "Third activity", imageUrl: "https://scontent-nrt1-1.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/10644049_589572924524332_1248049380_n.jpg"},
-  ]});
+
+  const instagramEndpoint = "https://api.instagram.com/v1/users/self/media/recent";
+  const accessToken = "16866771.e0000c4.2ad588423c3d46068e87b5e5d0959340";
+  let instagramActivities = [];
+
+  $.ajax({
+    url: instagramEndpoint,
+    data: { access_token: accessToken },
+    dataType: "jsonp"
+  }).done(function(data, textStatus, jqXHR) {
+    instagramActivities = data.data.map((data) => {
+      const date = new Date(parseInt(data.created_time) * 1000);
+
+      return {
+        text: data.caption.text,
+        link: data.link,
+        imageUrl: data.images.thumbnail.url,
+        date: date
+      }
+    });
+    dispatcher.dispatch({type: "RECEIVE_ACTIVITIES", activities: instagramActivities});
+  });
 }
