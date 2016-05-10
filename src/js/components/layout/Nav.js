@@ -1,7 +1,7 @@
 import React from "react";
 import { IndexLink } from "react-router";
 import { colors } from "../../style.js";
-
+import logo from "../../../images/logo.svg";
 export default class Nav extends React.Component {
 
   render() {
@@ -19,7 +19,7 @@ export default class Nav extends React.Component {
 
     return (
       <nav class="navbar navbar-fixed-top navbar-light bg-faded">
-        <IndexLink to="/" class="navbar-brand" style={brandStyle}><img src="./public/images/logo.svg" width="30" height="30" style={logoStyle}/><span class="main-color">ReactAct</span></IndexLink>
+        <IndexLink to="/" class="navbar-brand" style={brandStyle}><img src={logo} width="30" height="30" style={logoStyle}/><span class="main-color">ReactAct</span></IndexLink>
       </nav>
     );
   }
