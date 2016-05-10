@@ -7,8 +7,7 @@ var autoprefixer = require('autoprefixer');
 module.exports = {
   devtool: 'source-map',
   entry: {
-    app: path.join(__dirname, 'src/js/app.js'),
-    vendor: path.join(__dirname, 'src/js/vendor.js')
+    app: path.join(__dirname, 'src/js/app.js')
   },
   module: {
     loaders: [
@@ -23,20 +22,16 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract( 'style', 'css?sourceMap!postcss' )
+        loader: 'style!css?sourceMap!postcss',
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract( 'style', "css?sourceMap!postcss!sass?sourceMap" )
+        loader: 'style!css?sourceMap!postcss!sass?sourceMap',
       },
       {
-        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "url?limit=10000&name=fonts/[name].[ext]"
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
-        loader: 'file?name=fonts/[name].[ext]'
-      },
+         test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+         loader: "url?limit=10000" 
+      }
     ]
   },
   postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
@@ -47,13 +42,5 @@ module.exports = {
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: false, compress: { warnings: false }}),
-    new webpack.ProvidePlugin({
-        jQuery: 'jquery',
-        $: 'jquery',
-        jquery: 'jquery',
-        'Tether': 'tether',
-        'window.Tether': 'tether'
-    }),
-    new ExtractTextPlugin('[name].css'),
   ]
 };
