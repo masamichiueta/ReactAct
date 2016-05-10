@@ -30,7 +30,7 @@ module.exports = {
       },
       {
          test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
-         loader: "url?limit=10000" 
+         loader: "url?limit=10000"
       }
     ]
   },
@@ -42,5 +42,10 @@ module.exports = {
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: false, compress: { warnings: false }}),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
+      jquery: 'jquery'
+    }),
   ]
 };
