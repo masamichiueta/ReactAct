@@ -58,7 +58,6 @@ export function loadActivities() {
     getInstagramActivities(),
     getGitHubActivities()
   ).done(function(data1, data2) {
-    //Merge data1 and data2
     let activities = data1.concat(data2).sort((a, b) => {
       return b.date - a.date;
     });
