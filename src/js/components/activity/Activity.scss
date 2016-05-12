@@ -1,0 +1,129 @@
+.timeline > li {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.timeline > li:before,
+.timeline > li:after {
+  content: " ";
+  display: table;
+}
+
+.timeline > li:after {
+  clear: both;
+}
+
+.timeline > li .activity-panel {
+  width: 46%;
+  float: left;
+  border: 1px solid #d4d4d4;
+  border-radius: 2px;
+  padding: 20px;
+  position: relative;
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+}
+
+.timeline > li .activity-panel:before {
+  position: absolute;
+  top: 26px;
+  right: -15px;
+  display: inline-block;
+  border-top: 15px solid transparent;
+  border-left: 15px solid #ccc;
+  border-right: 0 solid #ccc;
+  border-bottom: 15px solid transparent;
+  content: " ";
+}
+
+.timeline > li .activity-panel:after {
+  position: absolute;
+  top: 27px;
+  right: -14px;
+  display: inline-block;
+  border-top: 14px solid transparent;
+  border-left: 14px solid #fff;
+  border-right: 0 solid #fff;
+  border-bottom: 14px solid transparent;
+  content: " ";
+}
+
+.timeline > li .activity-badge {
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.4em;
+  text-align: center;
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  margin-left: -25px;
+  background-color: #999999;
+  z-index: 100;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+.timeline > li.activity-inverted .activity-panel {
+  float: right;
+}
+
+.timeline > li.activity-inverted .activity-panel:before {
+  border-left-width: 0;
+  border-right-width: 15px;
+  left: -15px;
+  right: auto;
+}
+
+.timeline > li.activity-inverted .activity-panel:after {
+  border-left-width: 0;
+  border-right-width: 14px;
+  left: -14px;
+  right: auto;
+}
+
+.activity-badge.facebook {
+  background-color: #3b5998 !important;
+}
+
+.activity-badge.twitter {
+  background-color: #55acee !important;
+}
+
+.activity-badge.instagram {
+  background-color: #3f729b !important;
+}
+
+.activity-badge.github {
+  background-color: #333333 !important;
+}
+
+.activity-badge.medium {
+  background-color: #00ab6b !important;
+}
+
+.activity-badge.qiita {
+  background-color: #4cb10d !important;
+}
+
+.activity-title {
+  margin-top: 0;
+  color: inherit;
+}
+
+.activity-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.activity-body > p,
+.activity-body > ul {
+  margin-bottom: 0;
+}
+
+.activity-body > p + p {
+  margin-top: 5px;
+}
