@@ -1,6 +1,65 @@
 import dispatcher from "../dispatcher";
 import { ActivityType } from "../util";
 
+function getFacebookActivities() {
+  const facebookEndpoint = "https://graph.facebook.com/v2.6/me/posts";
+  //expire at 2016/7/11
+  const facebookAccessToken = "EAAHxpxZA3Ug0BAMdqdeZBZAxzgnjzTOtlQdzZCgDZAHpDI9DDCgC0BWmGEaJBJAuXPhbEkchlDHw68SJMMIJKqQfLA73rYrKBHRrUHUrSbJSmZBWwFRlWzDnYm40QsxLnGkguYo0IHoCs0K0XkwEfxZBCKjqobxIW4ZD";
+  let defer = $.Deferred();
+  $.ajax({
+    url: facebookEndpoint,
+    data: { access_token: facebookAccessToken },
+    dataType: "jsonp"
+  }).done(function(data, textStatus, jqXHR) {
+    if (data.hasOwnProperty('data')) {
+      let facebookActivities = data.data.map((data) => {
+        return {
+          text: data.story,
+          link: 'https://facebook.com',
+          imageUrl: null,
+          date: new Date((data.created_time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
+          type: ActivityType.Facebook
+        }
+      });
+      defer.resolve(facebookActivities);
+    } else {
+      defer.resolve([]);
+    }
+  }).fail(function() {
+    defer.reject();
+  });
+
+  return defer.promise();
+}
+
+function getTwitterActivities() {
+  const twitterEndPoint = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=micchyboy";
+  const twitterAccessToken = "AAAAAAAAAAAAAAAAAAAAANn9uwAAAAAAi4Fv4hIGcbjgdgCnaqXtBCW1nyI%3DtWFdF2X9nNZGjELEEwi8iCSbhG7vwFl1NjnWSxjGE8Mj8RCKsA";
+  let defer = $.Deferred();
+  $.ajax({
+    url: twitterEndPoint,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("Authorization", "Bearer AAAAAAAAAAAAAAAAAAAAANn9uwAAAAAAi4Fv4hIGcbjgdgCnaqXtBCW1nyI%3DtWFdF2X9nNZGjELEEwi8iCSbhG7vwFl1NjnWSxjGE8Mj8RCKsA")
+    }
+  }).done(function(data, textStatus, jqXHR) {
+    console.log(data);
+    let twitterActivities = data.map((data) => {
+      return {
+        text: data.text,
+        link: data.url,
+        imageUrl: null,
+        date: new Date(data.created_at),
+        type: ActivityType.Twitter
+      }
+    });
+    defer.resolve(twitterActivities);
+  }).fail(function() {
+    defer.reject();
+  });
+
+  return defer.promise();
+}
+
 function getInstagramActivities() {
   const instagramEndpoint = "https://api.instagram.com/v1/users/self/media/recent";
   const instagramAccessToken = "16866771.e0000c4.2ad588423c3d46068e87b5e5d0959340";
@@ -63,43 +122,14 @@ function getGitHubActivities() {
   return defer.promise();
 };
 
-function getFacebookActivities() {
-  const facebookEndpoint = "https://graph.facebook.com/v2.6/me/posts";
-  const facebookAccessToken = "EAAHxpxZA3Ug0BADliqqRrsJExqRZB0BPhVWPdLtwbccylYXbCkx04N6L9CIL9iVECTR7e1FObDIpO1alX8x6fMhBIa7uZAc0d9lmjPw4iJmgb9JEQYq8MQv8tWND3nvIQW8vBgPMuFYxh5Ua1wa8VlZAK8RzmW27SybiplTVywZDZD";
-  let defer = $.Deferred();
-  $.ajax({
-    url: facebookEndpoint,
-    data: { access_token: facebookAccessToken },
-    dataType: "jsonp"
-  }).done(function(data, textStatus, jqXHR) {
-    if (data.hasOwnProperty('data')) {
-      let facebookActivities = data.data.map((data) => {
-        return {
-          text: data.story,
-          link: 'https://facebook.com',
-          imageUrl: null,
-          date: new Date(data.created_time),
-          type: ActivityType.Facebook
-        }
-      });
-      defer.resolve(facebookActivities);
-    } else {
-      defer.resolve([]);
-    }
-  }).fail(function() {
-    defer.reject();
-  });
-
-  return defer.promise();
-}
-
 export function loadActivities() {
 
   $.when(
+    getFacebookActivities(),
+    getTwitterActivities(),
     getInstagramActivities(),
-    getGitHubActivities(),
-    getFacebookActivities()
-  ).done(function(data1, data2, data3) {
+    getGitHubActivities()
+  ).done(function(data1, data2, data3, data4) {
     let activities = data1.concat(data2).concat(data3).sort((a, b) => {
       return b.date - a.date;
     });

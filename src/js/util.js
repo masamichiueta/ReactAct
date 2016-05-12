@@ -3,6 +3,5 @@ export const ActivityType = {
   Twitter: 1,
   Instagram: 2,
   GitHub: 3,
-  Medium: 4,
-  Qiita: 5
+  Qiita: 4
 };
