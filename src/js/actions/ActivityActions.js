@@ -32,6 +32,7 @@ function getFacebookActivities() {
   return defer.promise();
 }
 
+//TODO: Fix twitter api
 function getTwitterActivities() {
   const twitterEndPoint = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=micchyboy";
   const twitterAccessToken = "AAAAAAAAAAAAAAAAAAAAANn9uwAAAAAAi4Fv4hIGcbjgdgCnaqXtBCW1nyI%3DtWFdF2X9nNZGjELEEwi8iCSbhG7vwFl1NjnWSxjGE8Mj8RCKsA";
@@ -40,7 +41,8 @@ function getTwitterActivities() {
     url: twitterEndPoint,
     beforeSend: function(xhr) {
       xhr.setRequestHeader("Authorization", "Bearer AAAAAAAAAAAAAAAAAAAAANn9uwAAAAAAi4Fv4hIGcbjgdgCnaqXtBCW1nyI%3DtWFdF2X9nNZGjELEEwi8iCSbhG7vwFl1NjnWSxjGE8Mj8RCKsA")
-    }
+    },
+    dataType: "jsonp"
   }).done(function(data, textStatus, jqXHR) {
     console.log(data);
     let twitterActivities = data.map((data) => {
@@ -126,7 +128,7 @@ export function loadActivities() {
 
   $.when(
     getFacebookActivities(),
-    getTwitterActivities(),
+    //getTwitterActivities(),
     getInstagramActivities(),
     getGitHubActivities()
   ).done(function(data1, data2, data3, data4) {
