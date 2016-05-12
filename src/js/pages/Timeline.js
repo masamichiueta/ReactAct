@@ -1,3 +1,5 @@
+import "./Timeline.scss"
+
 import React from "react";
 
 import Activity from "../components/activity/Activity";
@@ -41,33 +43,13 @@ export default class Timeline extends React.Component {
     const { activities } = this.state;
     const ActivityComponents = activities.map((activity, i) => {
       var inverted = i % 2 == 0 ? false : true;
-      return <Activity key={i} text={activity.text} link={activity.link} imageUrl={activity.imageUrl} date={activity.date} inverted={inverted} />
-    })
-
-    const ulStyle = {
-      ulBefore: {
-        top: '0',
-        bottom: '0',
-        position: 'absolute',
-        width: '3px',
-        backgroundColor: '#eeeeee',
-        left: '50%',
-        marginLeft: '-1.5px'
-      },
-      ul: {
-        listStyle: 'none',
-        padding: '20px 0 20px',
-        position: 'relative'
-      }
-    }
+      return <Activity key={i} text={activity.text} link={activity.link} imageUrl={activity.imageUrl} date={activity.date} type={activity.type} inverted={inverted} />
+    });
 
     return (
-      <div>
-        <span style={ulStyle.ulBefore}></span>
-        <ul style={ulStyle.ul}>
-          {ActivityComponents}
-        </ul>
-      </div>
+      <ul class="timeline">
+        {ActivityComponents}
+      </ul>
     );
   }
 
