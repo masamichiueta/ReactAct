@@ -1,4 +1,5 @@
 import dispatcher from "../dispatcher";
+import { ActivityType } from "../util";
 
 function getInstagramActivities() {
   const instagramEndpoint = "https://api.instagram.com/v1/users/self/media/recent";
@@ -10,17 +11,22 @@ function getInstagramActivities() {
     data: { access_token: instagramAccessToken },
     dataType: "jsonp"
   }).done(function(data, textStatus, jqXHR) {
-    let instagramActivities = data.data.map((data) => {
-      const date = new Date(parseInt(data.created_time) * 1000);
+    if (data.hasOwnProperty('data')) {
+      let instagramActivities = data.data.map((data) => {
+        const date = new Date(parseInt(data.created_time) * 1000);
 
-      return {
-        text: data.caption.text,
-        link: data.link,
-        imageUrl: data.images.thumbnail.url,
-        date: date
-      }
-    });
-    defer.resolve(instagramActivities);
+        return {
+          text: data.caption.text,
+          link: data.link,
+          imageUrl: data.images.thumbnail.url,
+          date: date,
+          type: ActivityType.Instagram
+        }
+      });
+      defer.resolve(instagramActivities);
+    } else {
+      defer.resolve([]);
+    }
   }).fail(function() {
     defer.reject();
   });
@@ -36,15 +42,20 @@ function getGitHubActivities() {
     url: gitHubEndpoint,
     dataType: "jsonp"
   }).done(function(data, textStatus, jqXHR) {
-    let gitHubActivities = data.data.map((data) => {
-      return {
-        text: data.type,
-        link: data.repo.url,
-        imageUrl: null,
-        date: new Date(data.created_at)
-      }
-    });
-    defer.resolve(gitHubActivities);
+    if (data.hasOwnProperty('data')) {
+      let gitHubActivities = data.data.map((data) => {
+        return {
+          text: data.type,
+          link: data.repo.url,
+          imageUrl: null,
+          date: new Date(data.created_at),
+          type: ActivityType.GitHub
+        }
+      });
+      defer.resolve(gitHubActivities);
+    } else {
+      defer.resolve([]);
+    }
   }).fail(function() {
     defer.reject();
   });
@@ -61,16 +72,20 @@ function getFacebookActivities() {
     data: { access_token: facebookAccessToken },
     dataType: "jsonp"
   }).done(function(data, textStatus, jqXHR) {
-    console.log(data);
-    let facebookActivities = data.data.map((data) => {
-      return {
-        text: data.story,
-        link: 'https://facebook.com',
-        imageUrl: null,
-        date: new Date(data.created_time)
-      }
-    });
-    defer.resolve(facebookActivities);
+    if (data.hasOwnProperty('data')) {
+      let facebookActivities = data.data.map((data) => {
+        return {
+          text: data.story,
+          link: 'https://facebook.com',
+          imageUrl: null,
+          date: new Date(data.created_time),
+          type: ActivityType.Facebook
+        }
+      });
+      defer.resolve(facebookActivities);
+    } else {
+      defer.resolve([]);
+    }
   }).fail(function() {
     defer.reject();
   });
