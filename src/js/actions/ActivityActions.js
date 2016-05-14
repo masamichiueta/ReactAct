@@ -100,7 +100,7 @@ export function loadActivities() {
     getFacebookActivities(),
     getInstagramActivities(),
     getGitHubActivities()
-  ).done(function(data1, data2, data3, data4) {
+  ).done(function(data1, data2, data3) {
     let activities = data1.concat(data2).concat(data3).sort((a, b) => {
       return b.date - a.date;
     });
