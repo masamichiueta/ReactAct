@@ -32,36 +32,6 @@ function getFacebookActivities() {
   return defer.promise();
 }
 
-//TODO: Fix twitter api
-function getTwitterActivities() {
-  const twitterEndPoint = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=micchyboy";
-  const twitterAccessToken = "AAAAAAAAAAAAAAAAAAAAANn9uwAAAAAAi4Fv4hIGcbjgdgCnaqXtBCW1nyI%3DtWFdF2X9nNZGjELEEwi8iCSbhG7vwFl1NjnWSxjGE8Mj8RCKsA";
-  let defer = $.Deferred();
-  $.ajax({
-    url: twitterEndPoint,
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("Authorization", "Bearer AAAAAAAAAAAAAAAAAAAAANn9uwAAAAAAi4Fv4hIGcbjgdgCnaqXtBCW1nyI%3DtWFdF2X9nNZGjELEEwi8iCSbhG7vwFl1NjnWSxjGE8Mj8RCKsA")
-    },
-    dataType: "jsonp"
-  }).done(function(data, textStatus, jqXHR) {
-    console.log(data);
-    let twitterActivities = data.map((data) => {
-      return {
-        text: data.text,
-        link: data.url,
-        imageUrl: null,
-        date: new Date(data.created_at),
-        type: ActivityType.Twitter
-      }
-    });
-    defer.resolve(twitterActivities);
-  }).fail(function() {
-    defer.reject();
-  });
-
-  return defer.promise();
-}
-
 function getInstagramActivities() {
   const instagramEndpoint = "https://api.instagram.com/v1/users/self/media/recent";
   const instagramAccessToken = "16866771.e0000c4.2ad588423c3d46068e87b5e5d0959340";
@@ -128,7 +98,6 @@ export function loadActivities() {
 
   $.when(
     getFacebookActivities(),
-    //getTwitterActivities(),
     getInstagramActivities(),
     getGitHubActivities()
   ).done(function(data1, data2, data3, data4) {
