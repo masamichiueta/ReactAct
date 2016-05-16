@@ -1,0 +1,10 @@
+$main-color: #FF79A6;
+$hover-color: #c3295d;
+
+.main-color {
+  color: $main-color;
+
+  &:hover {
+    color: $hover-color;
+  }
+}
