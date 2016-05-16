@@ -1,6 +1,5 @@
 import "./Activity.scss";
 
-import { colors } from "../../style";
 import { ActivityType } from "../../util";
 
 import React from "react";

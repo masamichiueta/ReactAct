@@ -5,7 +5,7 @@ export default class FacebookActivity extends React.Component {
   render() {
     const { data, date, inverted } = this.props;
 
-    const dateStr = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+    const dateStr = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()} ${(date.getHours()<10?'0':'') + date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
     const profilePictureURL = `//graph.facebook.com/${data.from.id}/picture`;
 
     let actionStr = "";
@@ -18,23 +18,26 @@ export default class FacebookActivity extends React.Component {
         <div class="activity-badge facebook">
           <i class="fa fa-facebook" aria-hidden="true"></i>
         </div>
-        <a target="_blank" href={data.link}>
-          <div class="activity-panel">
-            <div class="activity-user">
+        <div class="activity-panel">
+          <div class="clearfix">
+            <div class="activity-user pull-xs-left">
               <img class="profile-picture" src={profilePictureURL}/>
-              <span>{data.from.name}</span>
-              <span><small class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {dateStr}</small></span>
+              <span class="profile-username">{data.from.name}</span>
             </div>
+            <p class="activity-datetime pull-xs-right"><small class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {dateStr}</small></p>
+          </div>
+          <div class="activity-action">
+            <a class="main-color" target="_blank" href={data.link}>{actionStr}</a>
             {(() => {
               if (data.hasOwnProperty("picture"))
-                return <div class="activity-image">
+                return <div>
                   <img class="activity-image" src={data.picture}/>
                 </div>;
               })()
             }
+            </div>
           </div>
-        </a>
-      </li>
+        </li>
     );
   }
 }

@@ -5,7 +5,7 @@ export default class GitHubActivity extends React.Component {
   render() {
     const { data, date, inverted } = this.props;
 
-    const dateStr = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+    const dateStr = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()} ${(date.getHours()<10?'0':'') + date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}`;
 
     let url = "";
     let actionStr = "";
@@ -86,14 +86,16 @@ export default class GitHubActivity extends React.Component {
           <i class="fa fa-github" aria-hidden="true"></i>
         </div>
         <div class="activity-panel">
-          <div class="activity-user">
-            <img class="profile-picture" src={data.actor.avatar_url}/>
-            <span>{data.actor.login}</span>
-            <span><small class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {dateStr}</small></span>
+          <div class="clearfix">
+            <div class="activity-user pull-xs-left">
+              <img class="profile-picture" src={data.actor.avatar_url}/>
+              <span class="profile-username">{data.actor.login}</span>
+            </div>
+            <p class="activity-datetime pull-xs-right"><small class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {dateStr}</small></p>
           </div>
-          <a target="_blank" href={url}>
-            <p>{actionStr}</p>
-          </a>
+          <div class="activity-action">
+            <a class="main-color" target="_blank" href={url}>{actionStr}</a>
+          </div>
         </div>
       </li>
     );
