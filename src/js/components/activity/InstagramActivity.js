@@ -3,23 +3,24 @@ import React from "react";
 export default class InstagramActivity extends React.Component {
 
   render() {
-    const { text, link, imageUrl, date, inverted } = this.props;
+    const { data, date, inverted } = this.props;
 
-    const dateStr = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    const dateStr = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
 
     return (
       <li class={inverted ? "activity-inverted" : ""}>
         <div class="activity-badge instagram">
           <i class="fa fa-instagram" aria-hidden="true"></i>
         </div>
-        <a target="_blank" href={link}>
+        <a target="_blank" href={data.link}>
           <div class="activity-panel">
-            <div>
-              <p class="activity-title">{text}</p>
-              <p><small class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {dateStr} via Instagram</small></p>
+            <div class="activity-user">
+              <img class="profile-picture" src={data.user.profile_picture}/>
+              <span>{data.user.username}</span>
+              <span><small class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i> {dateStr}</small></span>
             </div>
-            <div>
-              <img class="activity-image" src={imageUrl}/>
+            <div class="activity-image">
+              <img class="activity-image" src={data.images.thumbnail.url}/>
             </div>
           </div>
         </a>

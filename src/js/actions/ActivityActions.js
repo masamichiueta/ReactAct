@@ -2,9 +2,9 @@ import dispatcher from "../dispatcher";
 import { ActivityType } from "../util";
 
 function getFacebookActivities() {
-  const facebookEndpoint = "https://graph.facebook.com/v2.6/me/posts";
-  //expire at 2016/7/11
-  const facebookAccessToken = "EAAHxpxZA3Ug0BAMdqdeZBZAxzgnjzTOtlQdzZCgDZAHpDI9DDCgC0BWmGEaJBJAuXPhbEkchlDHw68SJMMIJKqQfLA73rYrKBHRrUHUrSbJSmZBWwFRlWzDnYm40QsxLnGkguYo0IHoCs0K0XkwEfxZBCKjqobxIW4ZD";
+  const facebookEndpoint = "https://graph.facebook.com/v2.6/me/posts?fields=message,created_time,link,picture,from";
+  //expire at 2016/7/15
+  const facebookAccessToken = "EAAHxpxZA3Ug0BAFBZB0pxedN1dL9Vy8MZATpZCFnmAwHAZBFAGyXz8L61ZAiqzzt5J2ZCNJZCI12bF3W9ZB17PWhWVz0h1cFd6ICAH7lZA2yVpTqIZAhcuCkSRAqddSjwSGJlJJTY5lLKKoaX9JXISLmiXB1ZCyqDdup0KMZD";
   let defer = $.Deferred();
   $.ajax({
     url: facebookEndpoint,
@@ -12,11 +12,13 @@ function getFacebookActivities() {
     dataType: "jsonp"
   }).done(function(data, textStatus, jqXHR) {
     if (data.hasOwnProperty('data')) {
+      console.log(data.data);
       let facebookActivities = data.data.map((data) => {
         return {
-          text: data.story,
-          link: 'https://facebook.com',
-          imageUrl: null,
+          // text: data.story,
+          // link: 'https://facebook.com',
+          // imageUrl: null,
+          data: data,
           date: new Date((data.created_time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
           type: ActivityType.Facebook
         }
@@ -25,36 +27,6 @@ function getFacebookActivities() {
     } else {
       defer.resolve([]);
     }
-  }).fail(function() {
-    defer.reject();
-  });
-
-  return defer.promise();
-}
-
-//TODO: Fix twitter api
-function getTwitterActivities() {
-  const twitterEndPoint = "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=micchyboy";
-  const twitterAccessToken = "AAAAAAAAAAAAAAAAAAAAANn9uwAAAAAAi4Fv4hIGcbjgdgCnaqXtBCW1nyI%3DtWFdF2X9nNZGjELEEwi8iCSbhG7vwFl1NjnWSxjGE8Mj8RCKsA";
-  let defer = $.Deferred();
-  $.ajax({
-    url: twitterEndPoint,
-    beforeSend: function(xhr) {
-      xhr.setRequestHeader("Authorization", "Bearer AAAAAAAAAAAAAAAAAAAAANn9uwAAAAAAi4Fv4hIGcbjgdgCnaqXtBCW1nyI%3DtWFdF2X9nNZGjELEEwi8iCSbhG7vwFl1NjnWSxjGE8Mj8RCKsA")
-    },
-    dataType: "jsonp"
-  }).done(function(data, textStatus, jqXHR) {
-    console.log(data);
-    let twitterActivities = data.map((data) => {
-      return {
-        text: data.text,
-        link: data.url,
-        imageUrl: null,
-        date: new Date(data.created_at),
-        type: ActivityType.Twitter
-      }
-    });
-    defer.resolve(twitterActivities);
   }).fail(function() {
     defer.reject();
   });
@@ -77,9 +49,10 @@ function getInstagramActivities() {
         const date = new Date(parseInt(data.created_time) * 1000);
 
         return {
-          text: data.caption.text,
-          link: data.link,
-          imageUrl: data.images.thumbnail.url,
+          // text: data.caption.text,
+          // link: data.link,
+          // imageUrl: data.images.thumbnail.url,
+          data: data,
           date: date,
           type: ActivityType.Instagram
         }
@@ -106,9 +79,10 @@ function getGitHubActivities() {
     if (data.hasOwnProperty('data')) {
       let gitHubActivities = data.data.map((data) => {
         return {
-          text: data.type,
-          link: data.repo.url,
-          imageUrl: null,
+          // text: data.type,
+          // link: data.repo.url,
+          // imageUrl: null,
+          data: data,
           date: new Date(data.created_at),
           type: ActivityType.GitHub
         }
@@ -128,10 +102,9 @@ export function loadActivities() {
 
   $.when(
     getFacebookActivities(),
-    //getTwitterActivities(),
     getInstagramActivities(),
     getGitHubActivities()
-  ).done(function(data1, data2, data3, data4) {
+  ).done(function(data1, data2, data3) {
     let activities = data1.concat(data2).concat(data3).sort((a, b) => {
       return b.date - a.date;
     });
