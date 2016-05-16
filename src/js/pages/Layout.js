@@ -1,3 +1,5 @@
+import "./Layout.scss";
+
 import React from "react";
 import { Link } from "react-router";
 
@@ -7,13 +9,10 @@ import Nav from "../components/layout/Nav";
 export default class Layout extends React.Component {
 
   render() {
-    const containerStyle = {
-      marginTop: "60px"
-    };
     return (
       <div>
         <Nav/>
-        <div class="container" style={containerStyle}>
+        <div class="container">
           <div class="row">
             <div class="col-md-12">
 

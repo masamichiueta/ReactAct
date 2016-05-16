@@ -18,7 +18,7 @@
   float: left;
   border: 1px solid #d4d4d4;
   border-radius: 2px;
-  padding: 20px;
+  padding: 16px;
   position: relative;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
@@ -97,21 +97,20 @@
   background-color: #333333 !important;
 }
 
-.activity-title {
-  margin-top: 0;
-  color: inherit;
+.activity-user {
+
+}
+
+.activity-user > .profile-picture {
+  border-radius: 50%;
+  width: 40px;
+}
+
+.activity-user > p {
+  margin-bottom: 0;
 }
 
 .activity-image {
   max-width: 100%;
   height: auto;
-}
-
-.activity-body > p,
-.activity-body > ul {
-  margin-bottom: 0;
-}
-
-.activity-body > p + p {
-  margin-top: 5px;
 }
