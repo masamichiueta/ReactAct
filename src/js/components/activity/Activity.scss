@@ -1,3 +1,6 @@
+@import "../../../../node_modules/bootstrap/scss/variables";
+@import "../../../../node_modules/bootstrap/scss/mixins";
+
 .timeline > li {
   margin-bottom: 20px;
   position: relative;
@@ -12,8 +15,7 @@
   }
 
   .activity-panel {
-    width: 46%;
-    float: left;
+    float: right;
     border: 1px solid #d4d4d4;
     border-radius: 2px;
     padding: 16px;
@@ -21,14 +23,19 @@
     -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
 
+    @include media-breakpoint-up(md) {
+      width: 46%;
+    }
+
     &:before {
       position: absolute;
       top: 26px;
-      right: -15px;
+      right: auto;
+      left: -15px;
       display: inline-block;
       border-top: 15px solid transparent;
-      border-left: 15px solid #ccc;
-      border-right: 0 solid #ccc;
+      border-left: 0 solid #ccc;
+      border-right: 15px solid #ccc;
       border-bottom: 15px solid transparent;
       content: " ";
     }
@@ -36,13 +43,34 @@
     &:after {
       position: absolute;
       top: 27px;
-      right: -14px;
+      right: auto;
+      left: -14px;
       display: inline-block;
       border-top: 14px solid transparent;
-      border-left: 14px solid #fff;
-      border-right: 0 solid #fff;
+      border-left: 0 solid #fff;
+      border-right: 14px solid #fff;
       border-bottom: 14px solid transparent;
       content: " ";
+    }
+  }
+
+  &.activity-inverted .activity-panel {
+    @include media-breakpoint-up(lg) {
+      float: left;
+
+      &:before {
+        border-left-width: 15px;
+        border-right-width: 0;
+        right: -15px;
+        left: auto;
+      }
+
+      &:after {
+        border-left-width: 14px;
+        border-right-width: 0;
+        right: -14px;
+        left: auto;
+      }
     }
   }
 
@@ -55,7 +83,7 @@
     text-align: center;
     position: absolute;
     top: 16px;
-    left: 50%;
+    left: 0;
     margin-left: -25px;
     background-color: #999999;
     z-index: 100;
@@ -63,6 +91,10 @@
     border-top-left-radius: 50%;
     border-bottom-right-radius: 50%;
     border-bottom-left-radius: 50%;
+
+    @include media-breakpoint-up(lg) {
+      left: 50%;
+    }
 
     &.facebook {
       background-color: #3b5998 !important;
@@ -75,23 +107,7 @@
     }
   }
 
-  &.activity-inverted .activity-panel {
-    float: right;
 
-    &:before {
-      border-left-width: 0;
-      border-right-width: 15px;
-      left: -15px;
-      right: auto;
-    }
-
-    &:after {
-      border-left-width: 0;
-      border-right-width: 14px;
-      left: -14px;
-      right: auto;
-    }
-  }
 }
 
 .activity-user {

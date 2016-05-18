@@ -8,3 +8,8 @@ $hover-color: #c3295d;
     color: $hover-color;
   }
 }
+
+body {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
