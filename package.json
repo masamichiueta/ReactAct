@@ -37,7 +37,7 @@
   "scripts": {
     "clean": "gulp clean",
     "build": "gulp build",
-    "serve": "gulp serve"
+    "serve": "webpack --watch & gulp serve"
   },
   "repository": {
     "type": "git",

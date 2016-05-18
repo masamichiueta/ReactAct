@@ -1,3 +1,6 @@
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
+
 .timeline {
   list-style: none;
   padding: 20px 0 20px;
@@ -10,7 +13,11 @@
     content: " ";
     width: 3px;
     background-color: #eeeeee;
-    left: 50%;
+    left: 20px;
     margin-left: -1.5px;
+
+    @include media-breakpoint-up(lg) {
+      left: 50%;
+    }
   }
 }
