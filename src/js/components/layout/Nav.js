@@ -7,9 +7,11 @@ export default class Nav extends React.Component {
 
   render() {
 
+    const logoPath = `public/${logo}`;
+
     return (
       <nav class="navbar navbar-fixed-top navbar-light bg-faded">
-        <IndexLink to="/" class="navbar-brand brand"><img src={logo} height="30" class="logo"/></IndexLink>
+        <IndexLink to="/" class="navbar-brand brand"><img src={logoPath} height="30" class="logo"/></IndexLink>
       </nav>
     );
   }
