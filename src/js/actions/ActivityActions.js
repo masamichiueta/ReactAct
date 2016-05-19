@@ -1,23 +1,19 @@
 import dispatcher from "../dispatcher";
 import { ActivityType } from "../util";
+import { Config } from "../config";
 
 function getFacebookActivities() {
   const facebookEndpoint = "https://graph.facebook.com/v2.6/me/posts?fields=message,created_time,link,picture,from";
-  //expire at 2016/7/15
-  const facebookAccessToken = "EAAHxpxZA3Ug0BAFBZB0pxedN1dL9Vy8MZATpZCFnmAwHAZBFAGyXz8L61ZAiqzzt5J2ZCNJZCI12bF3W9ZB17PWhWVz0h1cFd6ICAH7lZA2yVpTqIZAhcuCkSRAqddSjwSGJlJJTY5lLKKoaX9JXISLmiXB1ZCyqDdup0KMZD";
+
   let defer = $.Deferred();
   $.ajax({
     url: facebookEndpoint,
-    data: { access_token: facebookAccessToken },
+    data: { access_token: Config.Facebook.AccessToken },
     dataType: "jsonp"
   }).done(function(data, textStatus, jqXHR) {
     if (data.hasOwnProperty('data')) {
-      console.log(data.data);
       let facebookActivities = data.data.map((data) => {
         return {
-          // text: data.story,
-          // link: 'https://facebook.com',
-          // imageUrl: null,
           data: data,
           date: new Date((data.created_time || "").replace(/-/g,"/").replace(/[TZ]/g," ")),
           type: ActivityType.Facebook
@@ -36,12 +32,11 @@ function getFacebookActivities() {
 
 function getInstagramActivities() {
   const instagramEndpoint = "https://api.instagram.com/v1/users/self/media/recent";
-  const instagramAccessToken = "16866771.e0000c4.2ad588423c3d46068e87b5e5d0959340";
 
   let defer = $.Deferred();
   $.ajax({
     url: instagramEndpoint,
-    data: { access_token: instagramAccessToken },
+    data: { access_token: Config.Instagram.AccessToken },
     dataType: "jsonp"
   }).done(function(data, textStatus, jqXHR) {
     if (data.hasOwnProperty('data')) {
@@ -49,9 +44,6 @@ function getInstagramActivities() {
         const date = new Date(parseInt(data.created_time) * 1000);
 
         return {
-          // text: data.caption.text,
-          // link: data.link,
-          // imageUrl: data.images.thumbnail.url,
           data: data,
           date: date,
           type: ActivityType.Instagram
@@ -69,7 +61,7 @@ function getInstagramActivities() {
 };
 
 function getGitHubActivities() {
-  const gitHubEndpoint = "https://api.github.com/users/micchyboy1023/events";
+  const gitHubEndpoint = `https://api.github.com/users/${Config.GitHub.UserName}/events`;
 
   let defer = $.Deferred();
   $.ajax({
@@ -79,9 +71,6 @@ function getGitHubActivities() {
     if (data.hasOwnProperty('data')) {
       let gitHubActivities = data.data.map((data) => {
         return {
-          // text: data.type,
-          // link: data.repo.url,
-          // imageUrl: null,
           data: data,
           date: new Date(data.created_at),
           type: ActivityType.GitHub
