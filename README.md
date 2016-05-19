@@ -1,11 +1,56 @@
-# ReactAct
-My first app for React.
-ReactAct collects my recent activities.
+![ReactAct](src/images/logo.png)
 
-##SetUp
+ReactAct is a single page application to collect and show your recent activities in the timeline.
+ReactAct can be hosted by GitHub Pages because it only uses client side code.
 
-`npm install`
+### Services
 
-##Check run script
+- [x] Facebook
+- [x] Instagram
+- [x] GitHub
 
-`npm run`
+[Demo](http://uetamasamichi.com/ReactAct)
+
+## SetUp
+
+### Install node.js packages
+```
+npm install -g webpack gulp
+npm install
+```
+
+### Set up your social accounts
+#### Facebook
+1. Create your facebook app.
+2. Get your access token from graph api explorer.
+> Important! Allow only user_posts permission.
+3. Add your access token in config.js.
+
+### Instagram
+1. Create your instagram app.
+2. Get your access token.
+> Important! Allow only basic scope permission.
+3. Add your access token in config.js.
+
+### GitHub
+1. Add your username in config.js.
+
+## Build ReactAct
+
+`npm run build`
+
+## Serve ReactAct
+
+`npm run serve`
+
+## Deploy ReactAct
+Create a repository on GitHub and create GitHub Pages.
+
+#Creator
+
+- [Masamichi Ueta](http://uetamasamichi.com)
+- Twitter: [@micchyboy](https://twitter.com/micchyboy)
+- GitHub:[@micchyboy1023](https://github.com/micchyboy1023)
+
+#License
+MIT License
