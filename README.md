@@ -48,9 +48,9 @@ Create a repository on GitHub and create GitHub Pages.
 
 #Creator
 
-- [Masamichi Ueta](http://uetamasamichi.com)
-- Twitter: [@micchyboy](https://twitter.com/micchyboy)
-- GitHub:[@micchyboy1023](https://github.com/micchyboy1023)
+- [Masamichi Ueta](http://masamichiueta.github.io)
+- Twitter: [@micchyboy](https://twitter.com/masamichiueta)
+- GitHub:[@micchyboy1023](https://github.com/masamichiueta)
 
 #License
 MIT License
